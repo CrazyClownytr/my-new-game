@@ -4,13 +4,13 @@ export class Floor extends Actor {
     constructor(x, y, width, height) {
         super({
             pos: new Vector(x, y),
-            width: width,
-            height: height,
+            width,
+            height,
             collisionType: CollisionType.Fixed
         });
     }
 
     onInitialize(engine) {
-       
+
     }
 }
