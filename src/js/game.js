@@ -26,19 +26,20 @@ export class Game extends Engine {
 
     startGame() {
         console.log("Start the game!");
+        const gameScene = new GameScene();
+        this.add('game', gameScene);
 
         const startScene = new StartScene();
         this.add('start', startScene);
         this.goToScene('start');
 
-        const endScene = new EndScene(); 
-        this.add('end', endScene);
-
         const deathScene = new DeathScene();
         this.add('death', deathScene);
 
-        const gameScene = new GameScene();
-        this.add('game', gameScene);
+        const endScene = new EndScene(); 
+        this.add('end', endScene);
+
+        
     }
 }
 

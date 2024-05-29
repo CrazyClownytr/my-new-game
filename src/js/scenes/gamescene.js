@@ -22,8 +22,6 @@ export class GameScene extends Scene {
 
     onActivate(ctx) {
         console.log("De speler komt opnieuw in het level");
-
-        this.clear(); 
         
         this.ui = new UI();
         this.add(this.ui);
@@ -53,5 +51,6 @@ export class GameScene extends Scene {
 
     onDeactivate(ctx) {
         console.log("We verlaten het level");
+        
     }
 }

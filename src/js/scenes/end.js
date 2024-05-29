@@ -32,7 +32,9 @@ export class EndScene extends Scene {
 
     handleInput(engine) {
         if (engine.input.keyboard.isHeld(Keys.Enter)) {
+            this.clear()
             this.engine.goToScene('start');
+            
         }
     }
 }

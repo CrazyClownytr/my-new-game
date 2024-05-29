@@ -25,6 +25,7 @@ export class DeathScene extends Scene {
 
     onPreUpdate(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Enter)) {
+            
             engine.goToScene('start');
         }
     }
