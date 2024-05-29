@@ -1,11 +1,16 @@
 import '../css/style.css';
-import { Engine, DisplayMode, Vector, SolverStrategy } from "excalibur";
+import { Engine, DisplayMode, Vector, SolverStrategy, Scene, Keys } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
 import { Player } from './player.js';
 import { Floor } from './floor.js';
 import { BG } from './background.js';
 import { Enemy } from './enemy.js';
-import { Bullet } from './bullet.js';
+import { Heart } from './heart.js';
+import { Key } from './key.js';
+import { UI } from './ui.js';
+import { StartScene } from './scenes/begin.js';
+import { EndScene } from './scenes/end.js';
+import { DeathScene } from './scenes/respawn.js';
 
 const options = {
     width: 1280,
@@ -16,46 +21,75 @@ const options = {
         solver: SolverStrategy.Arcade,
         gravity: new Vector(0, 800),
     }
-}
+};
 
 export class Game extends Engine {
+    ui;
+    score;
+    mylabel;
+    game;
+
+
     constructor() {
         super(options);
-        this.showDebug(true)
+        this.showDebug(true);
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
     startGame() {
-        console.log("start de game!");
+        console.log("Start the game!");
 
-        const background = new BG(640, 360, 1280, 720);
-        this.add(background);
+        const startScene = new StartScene();
+        this.add('start', startScene);
+        this.goToScene('start');
 
-        const floor = new Floor(200, 620, 2400, 20);
-        this.add(floor);
+        const endScene = new EndScene(); 
+        this.add('end', endScene);
 
-        const player = new Player(200, 200);
-        this.add(player);
+        const deathScene = new DeathScene();
+        this.add('death', deathScene);
+       
+        this.add('game', this.createGameScene());
+       
+    }
 
-        const bullet = new Bullet(player.pos.x + 10, player.pos.y);
-        this.add(bullet);
+    createGameScene() {
+        const gameScene = new Scene();
 
-        const enemy = new Enemy();
-        this.add(enemy);
+        gameScene.onInitialize = (engine) => {
+            const ui = new UI();
+            gameScene.add(ui);
 
-        const startX = 800;
-        const startY = 600;
-        const spacingX = 50;
-        const spacingY = 50;
+            const background = new BG(640, 360, 1280, 720);
+            gameScene.add(background);
 
-        // for loop
-        for (let i = 0; i < 5; i++) {
-            const x = startX + i * spacingX;
-            const y = startY - i * spacingY;
-            const enemy = new Enemy(x, y);
-            this.add(enemy);
-        }
+            const floor = new Floor(200, 620, 2400, 20);
+            gameScene.add(floor);
 
+            const player = new Player(200, 200, ui);
+            gameScene.add(player);
+
+            const startX = 800;
+            const startY = 600;
+            const spacingX = 60;
+            const spacingY = 0;
+
+            // Add enemies
+            for (let i = 0; i < 8; i++) {
+                const x = startX + i * spacingX;
+                const y = startY - i * spacingY;
+                const enemy = new Enemy(x, y, player, ui);
+                gameScene.add(enemy);
+            }
+
+            const heart = new Heart(400, 300);
+            gameScene.add(heart);
+
+            const key = new Key(1100, 300);
+            gameScene.add(key);
+            
+        };
+        return gameScene;
     }
 }
 

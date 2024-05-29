@@ -1,13 +1,17 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Sound, Resource, Loader, FontSource } from 'excalibur'
 import { Player } from './player'
+import { Heart } from './heart'
 
-// voeg hier jouw eigen resources toe
+
 const Resources = {
     Player: new ImageSource('images/player.png'),
     Enemy: new ImageSource ('images/enemy.png'),
     Background1: new ImageSource('images/background1.jpg'),
     Background2: new ImageSource('images/background2.png'),
-    Bullet: new ImageSource('images/bullet.png')
+    Bullet: new ImageSource('images/bullet.png'),
+    Heart: new ImageSource('images/heart.png'),
+    Key: new ImageSource('images/key.png'),
+    PixelFont: new FontSource('fonts/myfont.otf', 'PressStart')
 }
 
 const ResourceLoader = new Loader()

@@ -11,6 +11,5 @@ export class Floor extends Actor {
     }
 
     onInitialize(engine) {
-
     }
 }

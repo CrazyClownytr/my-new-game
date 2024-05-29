@@ -5,17 +5,19 @@ import { Player } from "./player";
 export class Enemy extends Actor {
     sprite;
     speed;
+    ui;
   
 
-    constructor(x, y) {
+    constructor(x, y, player, ui) {
         super({
             pos: new Vector(x, y),
             width: Resources.Enemy.width / 4,
             height: Resources.Enemy.height / 4,
             collisionType: CollisionType.Active
         });
-        this.speed = 30;
-        this.gravity = 1000;
+        this.speed= 30;
+        this.player = player;
+        this.ui = ui;
     }
 
     onInitialize(engine) {
@@ -28,20 +30,17 @@ export class Enemy extends Actor {
         );
 
         this.graphics.use(this.sprite);
+        
     }
 
-    onPreUpdate(engine, delta) {
-       
-        const player = engine.currentScene.actors.find(actor => actor instanceof Player);
-
-        if (player) {
-            const direction = player.pos.sub(this.pos).normalize();
-            this.vel = direction.scale(this.speed);
-        }
-        this.vel.y += this.gravity * delta / 1000;
+    onPreUpdate(engine) {
+        const direction = this.player.pos.sub(this.pos).normalize();
+        this.vel.x = direction.x * this.speed
     }
    
     hitByBullet() {
         console.log("ARRGHH I was hit by a bullet!")
+        this.ui.updateScore(10);
+        this.kill();
      }
 }
