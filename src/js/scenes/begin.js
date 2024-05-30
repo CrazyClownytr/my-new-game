@@ -1,7 +1,9 @@
-import { Scene, Label, Color, Vector, FontUnit, Keys } from 'excalibur';
+import { Scene, Label, Color, Vector, FontUnit, Keys, Actor } from 'excalibur';
 import { Resources } from '../resources';
+import { Begin } from '../begin-BG';
 
 export class StartScene extends Scene {
+
     constructor() {
         super();
         this.labelText1 = new Label({
@@ -24,11 +26,16 @@ export class StartScene extends Scene {
             })
         });
 
+        const background = new Begin(640, 360, 1280, 720);
+        this.add(background);
+        
+
         this.add(this.labelText1);
-        this.add(this.labelText2);
+        this.add(this.labelText2); 
     }
 
     onInitialize(engine) {
+       
         this.positionText();
     }
 
@@ -43,7 +50,7 @@ export class StartScene extends Scene {
         const textWidth = this.labelText1.width;
         const textHeight = this.labelText1.height;
 
-        const posX = (screenWidth - textWidth) / 8;
+        const posX = (screenWidth - textWidth) / 4;
         const posY = (screenHeight - textHeight) / 4;
 
         this.labelText1.pos = new Vector(posX, posY);

@@ -11,7 +11,10 @@ const Resources = {
     Bullet: new ImageSource('images/bullet.png'),
     Heart: new ImageSource('images/heart.png'),
     Key: new ImageSource('images/key.png'),
-    PixelFont: new FontSource('fonts/myfont.otf', 'PressStart')
+    PixelFont: new FontSource('fonts/myfont.otf', 'PressStart'),
+    Begin: new ImageSource('images/wp-begin.png'),
+    Death: new ImageSource('images/wp-death.png'),
+    End: new ImageSource('images/wp-end.png')
 }
 
 const ResourceLoader = new Loader()

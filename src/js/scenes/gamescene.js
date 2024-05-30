@@ -93,6 +93,6 @@ export class GameScene extends Scene {
 
     onDeactivate(ctx) {
         console.log("We verlaten het level");
-        this.clear(); 
+        // this.clear(); 
     }
 }
