@@ -4,7 +4,7 @@ import { StartScene } from './begin';
 
 export class EndScene extends Scene {
     endText = new Label({
-        text: 'Congratulations!, \n You have rsecured the key. \n Press enter to restart',
+        text: 'Congratulations!, \n You have secured the key. \n Press enter to restart',
         pos: new Vector(0, 0), 
         font: Resources.PixelFont.toFont({
             unit: FontUnit.Px,
