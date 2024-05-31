@@ -16,7 +16,8 @@ export class Player extends Actor {
     health;
     maxHealth;
     ui;
-    
+    hat;
+
 
     constructor(x, y, ui) {
         super({
@@ -34,6 +35,8 @@ export class Player extends Actor {
         this.maxHealth = 100;
         this.health = this.maxHealth;
         this.ui = ui;
+
+
     }
 
     onInitialize(engine) {
@@ -47,6 +50,12 @@ export class Player extends Actor {
 
         this.graphics.use(this.sprite);
         this.scale = new Vector(0.7, 0.7);
+
+        this.hat = new Actor();
+        this.hat.pos = new Vector(45, -this.height / 1.5);
+        this.hat.graphics.use(Resources.Hat.toSprite());
+        this.hat.scale = new Vector(0.2, 0.2); 
+        this.addChild(this.hat);
 
         this.vel = new Vector(0, 0);
         this.on("exitviewport", () => this.resetPosition());
@@ -90,10 +99,10 @@ export class Player extends Actor {
         }
     }
 
-    handleEnemyCollision(enemy) {  
+    handleEnemyCollision(enemy) {
         this.takeDamage(5);
     }
-    
+
     takeDamage(amount) {
         this.health -= amount;
         console.log(`Player health: ${this.health}`);
@@ -110,10 +119,10 @@ export class Player extends Actor {
         console.log("Player died!");
         this.scene?.engine.goToScene('death');
     }
-    
+
 
     handleHeartcollison(heart) {
-        heart.kill();  
+        heart.kill();
         this.health += 20;
         this.health = Math.min(this.health, this.maxHealth);
         if (this.ui) {
@@ -121,7 +130,7 @@ export class Player extends Actor {
         }
         console.log('i am healed!')
     }
-    
+
 
     collectKey(key) {
         key.kill();
@@ -139,7 +148,7 @@ export class Player extends Actor {
         let xspeed = 0;
         let yspeed = this.vel.y;
 
-        yspeed += this.gravity * (delta / 1000); 
+        yspeed += this.gravity * (delta / 1000);
 
         if (engine.input.keyboard.isHeld(Keys.W) || engine.input.keyboard.isHeld(Keys.Up)) {
             if (this.isGrounded) {
@@ -150,12 +159,14 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.isHeld(Keys.D) || engine.input.keyboard.isHeld(Keys.Right)) {
             xspeed = 200;
-            this.sprite.flipHorizontal = true; 
+            this.sprite.flipHorizontal = true;
+            this.hat.pos.x = -45;
         }
 
         if (engine.input.keyboard.isHeld(Keys.A) || engine.input.keyboard.isHeld(Keys.Left)) {
             xspeed = -200;
-            this.sprite.flipHorizontal = false; 
+            this.sprite.flipHorizontal = false;
+            this.hat.pos.x = 45;
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
@@ -166,12 +177,12 @@ export class Player extends Actor {
     }
 
     onPostUpdate(engine, delta) {
-        this.pos = this.pos.add(this.vel.scale(delta / 1000)); 
+        this.pos = this.pos.add(this.vel.scale(delta / 1000));
 
         this.pos.x = clamp(this.pos.x, 0, engine.drawWidth - this.width);
         this.pos.y = clamp(this.pos.y, 0, engine.drawHeight - this.height);
 
-        
+
         this.isGrounded = false;
     }
 

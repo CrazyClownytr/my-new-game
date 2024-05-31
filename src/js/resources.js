@@ -14,7 +14,8 @@ const Resources = {
     PixelFont: new FontSource('fonts/myfont.otf', 'PressStart'),
     Begin: new ImageSource('images/wp-begin.png'),
     Death: new ImageSource('images/wp-death.png'),
-    End: new ImageSource('images/wp-end.png')
+    End: new ImageSource('images/wp-end.png'),
+    Hat: new ImageSource('images/hat.png')
 }
 
 const ResourceLoader = new Loader()
